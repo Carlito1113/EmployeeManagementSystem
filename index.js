@@ -20,8 +20,8 @@ const DB = require("./db/dbFunctions")
 init();
 
 function init () {
-const logoText = logo({ name: "Employee"}).render();
-console.log(logoText);
+// const logoText = logo({ name: "Employee"}).render();
+// console.log(logoText);
 
     // Load our prompts
     loadPrompts();
