@@ -1,9 +1,9 @@
 // Require statements
-const inquirer = require('inquirer')
-const mysql = require('mysql');
+const inquirer = require("inquirer");
+const mysql = require("mysql");
 // const logo = require('asciiart-logo');
 // const cTable = require('console.table');
-const DB = require("./db/dbFunctions")
+const DB = require("./db/dbFunctions.js")
 
 
 // console.table([

@@ -1,4 +1,6 @@
-var connection = mysql.createConnection({
+const mysql = require("mysql")
+
+const connection = mysql.createConnection({
     host: "localhost",
   
     // Your port; if not 3306
