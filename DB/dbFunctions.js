@@ -4,21 +4,21 @@ const connection = require("./connection");
 
 class DB {
     viewDepartments() {
-        connection.query("SELECT * FROM department", function (err, res) {
+        connection.query("SELECT * FROM department", (err, res) => {
             if (err) throw err;
             console.table(res);
         });
     }
 
     viewAllEmployees() {
-        connection.query("SELECT * FROM employee", function (err, res) {
+        connection.query("SELECT * FROM employee", (err, res) => {
             if (err) throw err;
             console.table(res);
         });
     }
 
     viewRoles() {
-        connection.query("SELECT * FROM role", function (err, res) {
+        connection.query("SELECT * FROM role", (err, res) => {
             if (err) throw err;
             console.table(res);
         });
@@ -36,14 +36,14 @@ class DB {
         });
     }
     addEmployee() {
-        connection.query("INSERT INTO DEPARTMENT name VALUES = ?", function (err, res) {
+        connection.query("INSERT INTO DEPARTMENT name VALUES = ?", (err, res) => {
             if (err) throw err;
             console.table(res);
         });
     }
 
     addRole() {
-        connection.query("SELECT * FROM department", function (err, res) {
+        connection.query("SELECT * FROM department", (err, res) => {
             if (err) throw err;
             console.table(res);
         });
