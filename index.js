@@ -2,6 +2,18 @@
 const inquirer = require('inquirer')
 const mysql = require('mysql');
 const logo = require('asciiart-logo');
+const cTable = require('console.table');
+
+console.table([
+  {
+    name: 'foo',
+    age: 10
+  }, {
+    name: 'bar',
+    age: 20
+  }
+]);
+
 
 
 var connection = mysql.createConnection({
