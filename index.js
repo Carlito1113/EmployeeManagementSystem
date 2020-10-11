@@ -17,6 +17,7 @@ const DB = require("./db/dbFunctions")
 // ]);
 
 // Function init()
+init();
 
 function init () {
 const logoText = logo({ name: "Employee"}).render();
@@ -40,7 +41,7 @@ function loadPrompts () {
     })
     .then(answer => {
        // Switch statement
-    switch (answer.choices) {
+    switch (answer.choice) {
         // case "VIEW_EMPLOYEES":
         case "View Departments":
             return DB.viewDepartments();
