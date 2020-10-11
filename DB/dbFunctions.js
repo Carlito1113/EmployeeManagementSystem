@@ -36,7 +36,7 @@ class DB {
         });
     }
     addEmployee() {
-        connection.query("INSERT INTO DEPARTMENT name VALUES = ?", answer, function (err, res) {
+        connection.query("INSERT INTO DEPARTMENT name VALUES = ?", function (err, res) {
             if (err) throw err;
             console.table(res);
         });
