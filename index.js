@@ -49,6 +49,21 @@ function loadPrompts () {
         
         case "View Employees":
             return DB.viewAllEmployees();
+
+        case "View Roles":
+            return DB.viewRoles();
+        
+        case "Add Department":
+            return DB.addDepartment();
+        
+        case "Add Employee":
+            return DB.addEmployee();
+
+        case "Add Role":
+            return DB.addRole();
+        
+        case "Update Employee Role":
+            return DB.updateEmployeeRole();
     } 
     })
     
