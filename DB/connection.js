@@ -19,3 +19,5 @@ var connection = mysql.createConnection({
     // run the start function after the connection is made to prompt the user
     start();
   });
+
+  module.exports = connection;
