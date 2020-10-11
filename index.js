@@ -2,9 +2,10 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 // const logo = require('asciiart-logo');
-// const cTable = require('console.table');
+const cTable = require('console.table');
 const DB = require("./db/dbFunctions.js")
 
+ 
 
 // console.table([
 //   {
@@ -45,8 +46,13 @@ function loadPrompts () {
         // case "VIEW_EMPLOYEES":
         case "View Departments":
             return DB.viewDepartments();
+        
+        case "View Employees":
+            return DB.viewAllEmployees();
     } 
     })
     
 }
 
+
+ 
