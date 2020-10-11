@@ -3,25 +3,18 @@ const inquirer = require('inquirer')
 const mysql = require('mysql');
 const logo = require('asciiart-logo');
 const cTable = require('console.table');
-
-console.table([
-  {
-    name: 'foo',
-    age: 10
-  }, {
-    name: 'bar',
-    age: 20
-  }
-]);
+const DB = require("./db/dbFunctions")
 
 
-  // connect to the mysql server and sql database
-  connection.connect(function(err) {
-    if (err) throw err;
-    // run the start function after the connection is made to prompt the user
-    start();
-  });
-
+// console.table([
+//   {
+//     name: 'foo',
+//     age: 10
+//   }, {
+//     name: 'bar',
+//     age: 20
+//   }
+// ]);
 
 // Function init()
 
@@ -44,10 +37,13 @@ function loadPrompts () {
             value: "VIEW_EMPLOYEES"
         }]
     })
-    // Switch statement
-    switch (choice) {
+    .then(answer => {
+       // Switch statement
+    switch (answer.choice) {
         case "VIEW_EMPLOYEES":
             return viewEmployees();
-    }
+    } 
+    })
+    
 }
 
