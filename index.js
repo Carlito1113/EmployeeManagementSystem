@@ -1,7 +1,7 @@
 // Require statements
 const inquirer = require('inquirer')
 const mysql = require('mysql');
-const logo = require('asciiart-logo');
+// const logo = require('asciiart-logo');
 const cTable = require('console.table');
 const DB = require("./db/dbFunctions")
 
@@ -40,9 +40,10 @@ function loadPrompts () {
     })
     .then(answer => {
        // Switch statement
-    switch (answer.choice) {
-        case "VIEW_EMPLOYEES":
-            return viewEmployees();
+    switch (answer.choices) {
+        // case "VIEW_EMPLOYEES":
+        case "View Departments":
+            return DB.viewDepartments();
     } 
     })
     
