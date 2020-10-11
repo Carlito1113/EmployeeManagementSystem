@@ -2,7 +2,7 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 // const logo = require('asciiart-logo');
-const cTable = require('console.table');
+// const cTable = require('console.table');
 const DB = require("./db/dbFunctions.js")
 
  
@@ -17,13 +17,11 @@ const DB = require("./db/dbFunctions.js")
 //   }
 // ]);
 
-// Function init()
-init();
+
 
 function init () {
 // const logoText = logo({ name: "Employee"}).render();
 // console.log(logoText);
-
     // Load our prompts
     loadPrompts();
 }
@@ -70,4 +68,7 @@ function loadPrompts () {
 }
 
 
- 
+ // Function init()
+init();
+
+module.exports = loadPrompts;
