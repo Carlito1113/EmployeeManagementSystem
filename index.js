@@ -32,10 +32,11 @@ function loadPrompts () {
         type: 'list',
         name: 'choice',
         message: 'What would you like to do?',
-        choice: [{
-            name: "view All Employees",
-            value: "VIEW_EMPLOYEES"
-        }]
+        // choice: [{
+        //     name: "view All Employees",
+        //     value: "VIEW_EMPLOYEES"
+        // }]
+        choices: ["View Departments", "View Employees", "View Roles", "Add Department", "Add Employee", "Add Role", "Update Employee Role"]
     })
     .then(answer => {
        // Switch statement
