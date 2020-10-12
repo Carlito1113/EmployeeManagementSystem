@@ -1,6 +1,7 @@
 // Require statements
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+const connection = require("./db/connection.js");
 const DB = require("./db/dbFunctions.js")
 
 // const logo = require('asciiart-logo');
@@ -52,7 +53,10 @@ function loadPrompts () {
             break;
         case "Update Employee Role":
             DB.updateEmployeeRole();
-            break;            
+            break;
+        case "exit":
+            connection.end();
+            break;       
     } 
     })
     
