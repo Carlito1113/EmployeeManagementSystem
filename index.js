@@ -1,23 +1,10 @@
 // Require statements
 const inquirer = require("inquirer");
 const mysql = require("mysql");
-// const logo = require('asciiart-logo');
-// const cTable = require('console.table');
 const DB = require("./db/dbFunctions.js")
 
- 
-
-// console.table([
-//   {
-//     name: 'foo',
-//     age: 10
-//   }, {
-//     name: 'bar',
-//     age: 20
-//   }
-// ]);
-
-
+// const logo = require('asciiart-logo');
+// const cTable = require('console.table');
 
 function init () {
 // const logoText = logo({ name: "Employee"}).render();
@@ -32,36 +19,40 @@ function loadPrompts () {
         type: 'list',
         name: 'choice',
         message: 'What would you like to do?',
-        // choice: [{
-        //     name: "view All Employees",
-        //     value: "VIEW_EMPLOYEES"
-        // }]
-        choices: ["View Departments", "View Employees", "View Roles", "Add Department", "Add Employee", "Add Role", "Update Employee Role"]
+        choices: [
+            "View Departments", 
+            "View Employees", 
+            "View Roles", 
+            "Add Department", 
+            "Add Employee", 
+            "Add Role", 
+            "Update Employee Role"
+        ]
     })
     .then(answer => {
        // Switch statement
     switch (answer.choice) {
-        // case "VIEW_EMPLOYEES":
         case "View Departments":
-            return DB.viewDepartments();
-        
+            DB.viewDepartments();
+            break;
         case "View Employees":
-            return DB.viewAllEmployees();
-
+            DB.viewAllEmployees();
+            break;
         case "View Roles":
-            return DB.viewRoles();
-        
+            DB.viewRoles();
+            break;            
         case "Add Department":
-            return DB.addDepartment();
-        
+            DB.addDepartment();
+            break;
         case "Add Employee":
-            return DB.addEmployee();
-
+            DB.addEmployee();
+            break;
         case "Add Role":
-            return DB.addRole();
-        
+            DB.addRole();
+            break;
         case "Update Employee Role":
-            return DB.updateEmployeeRole();
+            DB.updateEmployeeRole();
+            break;            
     } 
     })
     
