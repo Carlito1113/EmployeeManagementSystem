@@ -1,13 +1,13 @@
 // Require statements
 const inquirer = require("inquirer");
-const mysql = require("mysql");
 const connection = require("./db/connection.js");
 const DB = require("./db/dbFunctions.js")
 
 // const logo = require('asciiart-logo');
 // const cTable = require('console.table');
 
-function init () {
+
+function init() {
 // const logoText = logo({ name: "Employee"}).render();
 // console.log(logoText);
     // Load our prompts
@@ -56,7 +56,7 @@ function loadPrompts () {
             break;
         case "exit":
             connection.end();
-            break;       
+            break;    
     } 
     })
     
