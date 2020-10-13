@@ -1,20 +1,46 @@
 // Require statements
 const inquirer = require("inquirer");
-const connection = require("./db/connection.js");
-const DB = require("./db/dbFunctions.js")
+const mysql = require("mysql")
 
 // const logo = require('asciiart-logo');
 // const cTable = require('console.table');
 
 
+// function init() {
+// // const logoText = logo({ name: "Employee"}).render();
+// // console.log(logoText);
+//     // Load our prompts
+//     loadPrompts();
+// }
+
+const connection = mysql.createConnection({
+    host: "localhost",
+  
+    // Your port; if not 3306
+    port: 3306,
+  
+    // Your username
+    user: "root",
+  
+    // Your password
+    password: "root",
+    database: "employees"
+  })
+
+// connect to the mysql server and sql database
+connection.connect(function(err) {
+  if (err) throw err;
+  // run the start function after the connection is made to prompt the user
+  init();
+});
+
 function init() {
-// const logoText = logo({ name: "Employee"}).render();
-// console.log(logoText);
-    // Load our prompts
-    loadPrompts();
-}
-
-
+  // const logoText = logo({ name: "Employee"}).render();
+  // console.log(logoText);
+      // Load our prompts
+      loadPrompts();
+  }
+  
 function loadPrompts () {
     inquirer.prompt ({
         type: 'list',
@@ -34,25 +60,25 @@ function loadPrompts () {
        // Switch statement
     switch (answer.choice) {
         case "View Departments":
-            DB.viewDepartments();
+            viewDepartments();
             break;
         case "View Employees":
-            DB.viewAllEmployees();
+            viewAllEmployees();
             break;
         case "View Roles":
-            DB.viewRoles();
+            viewRoles();
             break;            
         case "Add Department":
-            DB.addDepartment();
+            addDepartment();
             break;
         case "Add Employee":
-            DB.addEmployee();
+            addEmployee();
             break;
         case "Add Role":
-            DB.addRole();
+            addRole();
             break;
         case "Update Employee Role":
-            DB.updateEmployeeRole();
+            updateEmployeeRole();
             break;
         case "exit":
             connection.end();
@@ -63,7 +89,48 @@ function loadPrompts () {
 }
 
 
- // Function init()
-init();
+function viewDepartments() {
+    connection.query("SELECT * FROM department", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+}
 
-module.exports = loadPrompts;
+function viewAllEmployees() {
+    connection.query("SELECT first_name, last_name FROM employee", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+}
+
+function viewRoles() {
+    connection.query("SELECT title FROM role", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+}
+function addDepartment() {
+    inquirer.prompt({
+        type: "input",
+        name: "newDepartment",
+        message: "What department would you like to add?"
+    }).then(answer => {
+        connection.query("INSERT INTO DEPARTMENT name VALUES = ?", answer, function (err, res) {
+            if (err) throw err;
+            console.table(res);
+        })
+    });
+}
+function addEmployee() {
+    connection.query("INSERT INTO DEPARTMENT name VALUES = ?", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+}
+
+function addRole() {
+    connection.query("SELECT * FROM department", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    });
+}
