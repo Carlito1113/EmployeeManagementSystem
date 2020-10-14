@@ -49,7 +49,7 @@ loadPrompts = () => {
         "Add Role",
       ],
     })
-    .then((answer) => {
+    .then(answer => {
       switch (answer.choice) {
         case "View Departments":
           viewDepartments();
@@ -99,11 +99,13 @@ viewRoles = () => {
 
 addDepartment = () => {
   inquirer
-    .prompt({
+    .prompt(
+      {
       type: "input",
       name: "newDepartment",
       message: "What department would you like to add?",
-    })
+    }
+    )
     .then(answer => {
       connection.query(
         "INSERT INTO department SET ?",
@@ -122,21 +124,58 @@ addDepartment = () => {
 }
 
 addEmployee = () => {
-  connection.query("INSERT INTO department SET ?", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
-
   inquirer
     .prompt(
-    {
+      {
       type: "input",
       name: "firstName",
-      message: "What is the employee's first name?"
+      message: "What is the employee's first name?",
     },
-    {
-      type: "input",
-      name: "lastName",
-      message: "What is the employee's last name?"
-    },
-    )}
+    // {
+    //   type: "input",
+    //   name: "lastName",
+    //   message: "What is the employee's last name?",
+    // },
+    // {
+    //   type: "rawlist",
+    //   name: "role",
+    //   message: "What is the employee's role?",
+    //   choices: [],
+    // },
+    // {
+    //   type: "rawlist",
+    //   name: "manager",
+    //   message: "Who is the employee's manager",
+    //   choices: [],
+    // }
+    )
+    .then(answer => {
+      connection.query(
+        "INSERT INTO employee SET ?",
+        {
+          first_name: answer.firstName
+        },
+        // {
+        //   last_name: answer.lastName
+        // },
+        // {
+        //   role_id: answer.role
+        // },
+        // {
+        //   manager_id: answer.manager
+        // },
+        // function (err, res) {
+        //   if (err) throw err;
+        //   console.table(res);
+          )
+
+          loadPrompts();
+
+        // }
+      
+    })
+}
+
+addRole = () => {
+
+}
