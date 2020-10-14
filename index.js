@@ -47,7 +47,6 @@ loadPrompts = () => {
         "Add Department",
         "Add Employee",
         "Add Role",
-        "Update Employee Role",
       ],
     })
     .then((answer) => {
@@ -70,14 +69,11 @@ loadPrompts = () => {
         case "Add Role":
           addRole();
           break;
-        case "Update Employee Role":
-          updateEmployeeRole();
-          break;
-        case "exit":
-          connection.end();
+        default:
+          viewRoles();
           break;
       }
-    });
+    })
 }
 
 viewDepartments = () => {
@@ -128,7 +124,8 @@ addEmployee = () => {
     console.table(res);
   });
 
-  inquirer.prompt(
+  inquirer
+    .prompt(
     {
     type: "input",
     name: "firstName",
@@ -172,7 +169,7 @@ addEmployee = () => {
         }
       )
 
-      startPrompts();
+      loadPrompts();
     });
 
 }
@@ -182,4 +179,32 @@ addRole = () => {
     if (err) throw err;
     console.table(res);
   });
+
+  inquirer
+    .prompt(
+    {
+      input: "input",
+      name: "role",
+      message: "What role would you like to add?"
+    },
+    {
+      input: "input",
+      name: "salary",
+      message: "How much does this role make?",
+    }
+  )
+  .then(answers => {
+    connection.query(
+      "INSERT INTO role set ?",
+      {
+        title: answers.role,
+        salary: answers.salary
+      },
+      err => {
+        if (err) throw err;
+        console.log("Successfully added role!");
+        loadPrompts();
+      }
+    )
+  })
 }
