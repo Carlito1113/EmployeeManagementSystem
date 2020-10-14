@@ -131,29 +131,30 @@ addEmployee = () => {
       name: "firstName",
       message: "What is the employee's first name?",
     },
-    // {
-    //   type: "input",
-    //   name: "lastName",
-    //   message: "What is the employee's last name?",
-    // },
-    // {
-    //   type: "rawlist",
-    //   name: "role",
-    //   message: "What is the employee's role?",
-    //   choices: [],
-    // },
-    // {
-    //   type: "rawlist",
-    //   name: "manager",
-    //   message: "Who is the employee's manager",
-    //   choices: [],
-    // }
+    {
+      type: "input",
+      name: "lastName",
+      message: "What is their last name?",
+    },
+    {
+      type: "rawlist",
+      name: "role",
+      message: "What is their role?",
+    },
+    {
+      type: "rawlist",
+      name: "manager",
+      message: "Who is their manager?",
+    }
     )
     .then(answer => {
       connection.query(
         "INSERT INTO employee SET ?",
         {
-          first_name: answer.firstName
+          first_name: answer.firstName,
+          last_name: answer.lastName,
+          role_id: answer.role,
+          manager_id: answer.manager
         },
         // {
         //   last_name: answer.lastName
@@ -164,12 +165,13 @@ addEmployee = () => {
         // {
         //   manager_id: answer.manager
         // },
-        // function (err, res) {
-        //   if (err) throw err;
-        //   console.table(res);
-          )
-
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
           loadPrompts();
+        } 
+        )
+         
 
         // }
       
@@ -177,5 +179,36 @@ addEmployee = () => {
 }
 
 addRole = () => {
-
+  inquirer
+    .prompt([
+      {
+        input: "input",
+        name: "role",
+        message: "What role would you like to add?",
+      },
+      {
+        input: "input",
+        name: "salary",
+        message: "What is their salary?",
+      },
+      {
+        input: "input",
+        name: "id",
+        message: "What is their ID?",
+      }
+    ])
+    .then(answers => {
+      connection.query(
+        "INSERT INTO role SET ?",
+        {
+          title: answers.role,
+          salary: answers.salary,
+          department_id: answer.id
+        },
+        function (err) {
+          if (err) throw err;
+          loadPrompts();
+        }
+      )
+    })
 }
