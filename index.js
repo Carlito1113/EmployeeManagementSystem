@@ -122,7 +122,7 @@ addDepartment = () => {
 }
 
 addEmployee = () => {
-  connection.query("INSERT INTO DEPARTMENT name VALUES = ?", (err, res) => {
+  connection.query("INSERT INTO department SET ?", (err, res) => {
     if (err) throw err;
     console.table(res);
   });
@@ -130,49 +130,12 @@ addEmployee = () => {
   inquirer
     .prompt(
     {
-    type: "input",
-    name: "firstName",
-    message: "What is the employee's first name?",
-    validate: answer => {
-      if (answer !== "") {
-        return true;
-      }
-      return "Please enter a valid first name";
-      }
+      type: "input",
+      name: "firstName",
+      message: "What is the employee's first name?"
     },
     {
       type: "input",
       name: "lastName",
-      message: "What is their last name?",
-      validate: answer => {
-        if (answer !== "") {
-          return true;
-        }
-        return "Please enter a valid last Name";
-      }
+      message: "What is the employee's last name?"
     },
-    {
-      type: "list",
-      name: "role",
-      message: "What is their role?",
-      choices: []
-    },
-    {
-      type: "list",
-      name: "manager",
-      message: "Who is their manager?",
-      choices: []
-    })
-    .then(answers => {
-      connection.query(
-        "INSERT INTO employee SET ?",
-        {
-          first_name: answers.firstName,
-          last_name: answers.lastName
-        }
-      )
-
-      loadPrompts();
-    });
-
-}
