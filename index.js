@@ -1,10 +1,10 @@
 // Require statements
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+const cTable = require('console.table');
+
 
 // const logo = require('asciiart-logo');
-// const cTable = require('console.table');
-
 // function init() {
 // // const logoText = logo({ name: "Employee"}).render();
 // // console.log(logoText);
@@ -49,8 +49,8 @@ loadPrompts = () => {
         "Add Role",
       ],
     })
-    .then(answer => {
-      switch (answer.choice) {
+    .then(answers => {
+      switch (answers.choice) {
         case "View Departments":
           viewDepartments();
           break;
@@ -106,11 +106,11 @@ addDepartment = () => {
       message: "What department would you like to add?",
     }
     )
-    .then(answer => {
+    .then(answers => {
       connection.query(
         "INSERT INTO department SET ?",
         {
-          name: answer.newDepartment
+          name: answers.newDepartment
         },
         function (err, res) {
           if (err) throw err;
@@ -124,8 +124,12 @@ addDepartment = () => {
 }
 
 addEmployee = () => {
+  connection.query("SELECT * FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id",
+    function (err, results) {
+      console.table(results);
+      if (err) throw err;
   inquirer
-    .prompt(
+    .prompt([
       {
       type: "input",
       name: "firstName",
@@ -140,21 +144,40 @@ addEmployee = () => {
       type: "rawlist",
       name: "role",
       message: "What is their role?",
+      choices: function() {
+        let choiceArray = [];
+        for (let i = 0; i < results.length; i++) {
+          choiceArray.push(results[i].title);
+        }
+        return choiceArray;
+      }
     },
     {
-      type: "rawlist",
+      input: "input",
       name: "manager",
       message: "Who is their manager?",
     }
-    )
-    .then(answer => {
+    ])
+    .then(answers => {
+      let newRole;
+      for (let i = 0; i < results.length; i++) {
+        if (results[i].title === answers.role) {
+          newRole = results[i];
+        }
+      }
+      let newManager;
+      for (let i = 0; i < results.length; i++) {
+        if (results[i].first_name === answers.manager) {
+          newManager = results[i];
+        }
+      }
       connection.query(
         "INSERT INTO employee SET ?",
         {
-          first_name: answer.firstName,
-          last_name: answer.lastName,
-          role_id: answer.role,
-          manager_id: answer.manager
+          first_name: answers.firstName,
+          last_name: answers.lastName,
+          role_id: newRole.role_id,
+          manager_id: newManager.manager_id
         },
         // {
         //   last_name: answer.lastName
@@ -169,13 +192,12 @@ addEmployee = () => {
           if (err) throw err;
           console.table(res);
           loadPrompts();
-        } 
-        )
-         
-
+        })
+        
         // }
       
     })
+  });
 }
 
 addRole = () => {
@@ -203,7 +225,7 @@ addRole = () => {
         {
           title: answers.role,
           salary: answers.salary,
-          department_id: answer.id
+          department_id: answers.id
         },
         function (err) {
           if (err) throw err;
