@@ -96,6 +96,7 @@ viewRoles = () => {
     console.table(res);
   });
 }
+
 addDepartment = () => {
   inquirer
     .prompt({
@@ -103,20 +104,22 @@ addDepartment = () => {
       name: "newDepartment",
       message: "What department would you like to add?",
     })
-    .then((answer) => {
+    .then(answer => {
       connection.query(
-        "INSERT INTO DEPARTMENT name VALUES = ?",
-        answer,
+        "INSERT INTO department SET ?",
+        {
+          name: answer.newDepartment
+        },
         function (err, res) {
           if (err) throw err;
           console.table(res);
+
+          loadPrompts();
+
         }
       );
     });
 }
-
-
-
 
 addEmployee = () => {
   connection.query("INSERT INTO DEPARTMENT name VALUES = ?", (err, res) => {
@@ -172,39 +175,4 @@ addEmployee = () => {
       loadPrompts();
     });
 
-}
-
-addRole = () => {
-  connection.query("SELECT * FROM department", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
-
-  inquirer
-    .prompt(
-    {
-      input: "input",
-      name: "role",
-      message: "What role would you like to add?"
-    },
-    {
-      input: "input",
-      name: "salary",
-      message: "How much does this role make?",
-    }
-  )
-  .then(answers => {
-    connection.query(
-      "INSERT INTO role set ?",
-      {
-        title: answers.role,
-        salary: answers.salary
-      },
-      err => {
-        if (err) throw err;
-        console.log("Successfully added role!");
-        loadPrompts();
-      }
-    )
-  })
 }
