@@ -14,14 +14,8 @@ const mysql = require("mysql");
 
 const connection = mysql.createConnection({
   host: "localhost",
-
-  // Your port; if not 3306
   port: 3306,
-
-  // Your username
   user: "root",
-
-  // Your password
   password: "root",
   database: "employees",
 });
@@ -33,14 +27,14 @@ connection.connect(function (err) {
   init();
 });
 
-function init() {
+init = () => {
   // const logoText = logo({ name: "Employee"}).render();
   // console.log(logoText);
   // Load our prompts
   loadPrompts();
 }
 
-function loadPrompts() {
+loadPrompts = () => {
   inquirer
     .prompt({
       type: "list",
@@ -86,27 +80,27 @@ function loadPrompts() {
     });
 }
 
-function viewDepartments() {
+viewDepartments = () => {
   connection.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
     console.table(res);
   });
 }
 
-function viewAllEmployees() {
+viewAllEmployees = () => {
   connection.query("SELECT first_name, last_name FROM employee", (err, res) => {
     if (err) throw err;
     console.table(res);
   });
 }
 
-function viewRoles() {
+viewRoles = () => {
   connection.query("SELECT title FROM role", (err, res) => {
     if (err) throw err;
     console.table(res);
   });
 }
-function addDepartment() {
+addDepartment = () => {
   inquirer
     .prompt({
       type: "input",
@@ -124,14 +118,66 @@ function addDepartment() {
       );
     });
 }
-function addEmployee() {
+
+
+
+
+addEmployee = () => {
   connection.query("INSERT INTO DEPARTMENT name VALUES = ?", (err, res) => {
     if (err) throw err;
     console.table(res);
   });
+
+  inquirer.prompt(
+    {
+    type: "input",
+    name: "firstName",
+    message: "What is the employee's first name?",
+    validate: answer => {
+      if (answer !== "") {
+        return true;
+      }
+      return "Please enter a valid first name";
+      }
+    },
+    {
+      type: "input",
+      name: "lastName",
+      message: "What is their last name?",
+      validate: answer => {
+        if (answer !== "") {
+          return true;
+        }
+        return "Please enter a valid last Name";
+      }
+    },
+    {
+      type: "list",
+      name: "role",
+      message: "What is their role?",
+      choices: []
+    },
+    {
+      type: "list",
+      name: "manager",
+      message: "Who is their manager?",
+      choices: []
+    })
+    .then(answers => {
+      connection.query(
+        "INSERT INTO employee SET ?",
+        {
+          first_name: answers.firstName,
+          last_name: answers.lastName
+        }
+      )
+
+      startPrompts();
+    });
+
 }
 
-function addRole() {
+addRole = () => {
   connection.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
     console.table(res);
